@@ -26,7 +26,7 @@ const NavBar = () => {
     <div className="navbar bg-base-100 shadow-md">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost text-xl font-bold">
-          Note's Manager
+          Note's Manager by Bonin :)
         </Link>
       </div>
       <div className="navbar-end">
