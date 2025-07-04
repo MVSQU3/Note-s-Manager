@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const connectDb = async () => {
   try {
     await mongoose
-      .connect(process.env.MONGO_URI, { family: 4 })
+      .connect(process.env.MONGO_URI)
       .then(async () => {
         console.log("Connecté à MongoDB");
       })

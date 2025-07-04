@@ -18,7 +18,8 @@ export const createNote = async (req, res) => {
 // Récupérer toutes les notes
 export const getAllNotes = async (req, res) => {
   try {
-    const notes = await Note.find().select('-__v').populate('userId', 'name email');
+    const notes = await Note.find()
+      .select("-__v")
     res.status(200).json(notes);
   } catch (error) {
     console.error("Erreur récupération notes :", error);
@@ -29,7 +30,7 @@ export const getAllNotes = async (req, res) => {
 // Récupérer une note par ID
 export const getNoteById = async (req, res) => {
   try {
-    const id = req.params.id
+    const id = req.params.id;
     const note = await Note.findById(id);
     if (!note) {
       return res.status(404).json({ message: "Note non trouvée" });
@@ -40,8 +41,6 @@ export const getNoteById = async (req, res) => {
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
-
-
 
 // Mettre à jour une note
 export const updateNote = async (req, res) => {

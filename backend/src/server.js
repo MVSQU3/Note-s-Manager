@@ -2,16 +2,18 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes.js";
-import rateLimiter from "./middleware/Ratelimit.js";
+// import rateLimiter from "./middleware/Ratelimit.js";
+
 import connectDB from "./config/db/mongodb.js";
 import path from "path";
+import { limiter } from "./middleware/limit.js";
 const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
+dotenv.config();
 connectDB();
 
-dotenv.config();
 if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
@@ -21,14 +23,15 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 app.use(express.json());
-app.use(rateLimiter);
+// app.use(rateLimiter);
+app.use(limiter);
 app.use(router);
 
 if (process.env.NODE_ENV === "production") {
   app.use(
     express.static(path.join(__dirname, "..", "client", "frontend", "dist"))
   );
-    app.get("*", (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(
       path.join(__dirname, "..", "client", "frontend", "dist", "index.html")
     );
